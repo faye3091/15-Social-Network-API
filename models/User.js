@@ -25,11 +25,18 @@ const UserSchema = new Schema({
 },
 {
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        getters: true
     },
     id: false
 })
 
-const User = model('User', UserSchema)
+//get total count of friends
+UserSchema.virtual('friendsCount').get(function() {
+    return this.friends.length;
+})
+
+//create the User model using the User Schema
+const User = model('User', UserSchema);
 
 module.exports = User;
