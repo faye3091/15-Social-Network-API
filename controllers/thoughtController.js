@@ -17,7 +17,7 @@ const thoughtsController = {
     },
 
     //get a certain thought by ID
-    getThoughtById({ params }, res) {
+    getThoughtById({params}, res) {
         Thought.findOne({ _id: params.id })
         .select('-__v')
         .then(dbThoughtsData => {
@@ -34,7 +34,7 @@ const thoughtsController = {
     },
 
     //Create a new thought
-    createThought({ params, body}, res) {
+    createThought({params, body}, res) {
         Thought.create(body)
         .then(({ _id }) => {
             return getAllUsers.findOneAndUpdate({ _id: params.userId }, { $push: { thoughts: _id }}, { new: true, runValidators: true });
