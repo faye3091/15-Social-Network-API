@@ -2,6 +2,7 @@ const { Thought, User } = require('../models');
 const { getAllUsers } = require('./userController');
 
 const thoughtsController = {
+    
 
     //get all available Thoughts
     getAllThoughts(req,res) {
@@ -29,7 +30,7 @@ const thoughtsController = {
         })
         .catch(error => {
             console.log(error);
-            res.status(400).json(error)
+            res.sendSatus(400);
         })
     },
 
@@ -37,7 +38,7 @@ const thoughtsController = {
     createThought({params, body}, res) {
         Thought.create(body)
         .then(({ _id }) => {
-            return getAllUsers.findOneAndUpdate({ _id: params.userId }, { $push: { thoughts: _id }}, { new: true, runValidators: true });
+            return getAllUsers.findOneAndUpdate({ _id: params.userId }, { $push: { thoughts: _id }}, { new: true});
         })
         .then(dbThoughtsData => {
             if(!dbThoughtsData) {
@@ -61,7 +62,7 @@ const thoughtsController = {
             }
             res.json(dbThoughtsData);
         })
-        .catch(error => res.status(400).json(error));
+        .catch(error => res.json(error));
     },
 
     //Delete a current thought by ID

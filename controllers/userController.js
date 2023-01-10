@@ -10,7 +10,7 @@ const userController = {
         // populate user friends
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
-        .sort({_id: -1})
+        //.sort({_id: -1})
         .then(dbUsersData => res.json(dbUsersData))
         .catch(error => {
             console.log(error);
@@ -55,7 +55,7 @@ const userController = {
             }
             res.json(dbUserData);
         })
-        .catch(error => res.status(400).json(error))
+        .catch(error => res.json(error))
     },
 
     //Delete a user
@@ -73,7 +73,7 @@ const userController = {
 
     //Add a friend
     addFriend({ params }, res) {
-        User.findOneAndUpdate({ _id: params.id }, { $push: { friends: params.friendId }}, { new: true, runValidators: true })
+        User.findOneAndUpdate({ _id: params.id }, { $push: { friends: params.friendId }}, { new: true })
         .populate({path: 'friends', select: ('-__v')})
         .select('-__v')
         .then(dbUsersData => {
